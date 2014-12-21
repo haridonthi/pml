@@ -11,7 +11,7 @@ I pre-processed the data and applied the Random Forests method for my prediction
 
 I applied 2 pre-processing steps.
 
-Step 1. Used the NonZeroValues function to retain only non-zero values:
+Step 1. Used the nearZeroVar function to retain only non-zero values:
 
   ```
   nzv <- nearZeroVar(training)
@@ -26,18 +26,47 @@ Step 2. Removed variables that had all NAs in the test set. I did not want to do
   training2 <- training1[,!(names(training1) %in% nullsInTest)]
   ```
 
+Step 3. Removed 3 variables subjectively""
+
+  ```
+  drops <- c("X","user_name","num_window")
+  training3 <- training2[,!names(training2) %in% drops]
+  ```
+
 At the end of pre-processing, my training dataset had 59 variables.
 
 ## Training
 
-I did a 10-fold cross-validation, 10-times using  ```method="repeatedcv"```.
+I did a 2-fold cross-validation, 2-times using  ```method="repeatedcv"```.
 
 ```
-#rf - removed nullsInTest, 10-foldcv, 10-times,
-fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
-rfFit3 <- train(classe ~ ., data = training2, method = "rf", trControl = fitControl)
-rfFit3
+> set.seed(825)
+> fitControl <- trainControl(method = "repeatedcv", number = 2, repeats = 2)
+> rfFit3 <- train(classe ~ ., data = training2, method = "rf", trControl = fitControl)
+> rfFit3
+Random Forest 
+
+19622 samples
+   58 predictor
+    5 classes: 'A', 'B', 'C', 'D', 'E' 
+
+No pre-processing
+Resampling: Cross-Validated (2 fold, repeated 2 times) 
+
+Summary of sample sizes: 9810, 9812, 9811, 9811 
+
+Resampling results across tuning parameters:
+
+  mtry  Accuracy   Kappa      Accuracy SD   Kappa SD    
+   2    0.9950820  0.9937792  0.0010832826  0.0013702370
+  41    0.9997197  0.9996455  0.0002806919  0.0003550220
+  80    0.9995413  0.9994199  0.0003169171  0.0004008397
+
+Accuracy was used to select the optimal model using  the largest value.
+The final value used for the model was mtry = 41. 
 ```
 
-My model has .86 accuracy
+My model has .99 accuracy
 
+## Acknowledgments
+http://groupware.les.inf.puc-rio.br/har

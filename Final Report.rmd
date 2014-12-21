@@ -9,14 +9,16 @@ I pre-processed the data and applied the Random Forests method for my prediction
 
 ## Pre-Processing
 
-I applied 2 pre-processing steps
-1. Used the NonZeroValues function to retain only non-zero values:
+I applied 2 pre-processing steps.
+
+Step 1. Used the NonZeroValues function to retain only non-zero values:
+
   ```
   nzv <- nearZeroVar(training)
   training1 <- training[, -nzv]
   ```
 
-2. Removed variables that had all NAs in the test set. I did not want to do this, but I could not get the predict function to work when a variable in the test set had all NAs:
+Step 2. Removed variables that had all NAs in the test set. I did not want to do this, but I could not get the predict function to work when a variable in the test set had all NAs:
 
   ```
   a <- nearZeroVar(testing, saveMetrics = TRUE)
@@ -24,7 +26,7 @@ I applied 2 pre-processing steps
   training2 <- training1[,!(names(training1) %in% nullsInTest)]
   ```
 
-At the end of pre-processing I had 59 variables
+At the end of pre-processing, my training dataset had 59 variables.
 
 ## Training
 

@@ -16,7 +16,8 @@ I applied 2 pre-processing steps
   training1 <- training[, -nzv]
   ```
 
-2. Removed variables that had all NAs in the test set. I did not want to do this, but I could not get the predict function to work when a variable in the test set had all NAs.
+2. Removed variables that had all NAs in the test set. I did not want to do this, but I could not get the predict function to work when a variable in the test set had all NAs:
+
   ```
   a <- nearZeroVar(testing, saveMetrics = TRUE)
   nullsInTest <- rownames(subset(a,nzv==TRUE))
@@ -28,6 +29,13 @@ At the end of pre-processing I had 59 variables
 ## Training
 
 I did a 10-fold cross-validation, 10-times using  ```method="repeatedcv"```.
+
+```
+#rf - removed nullsInTest, 10-foldcv, 10-times,
+fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
+rfFit3 <- train(classe ~ ., data = training2, method = "rf", trControl = fitControl)
+rfFit3
+```
 
 My model has .86 accuracy
 

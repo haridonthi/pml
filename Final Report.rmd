@@ -26,14 +26,14 @@ Step 2. Removed variables that had all NAs in the test set. I did not want to do
   training2 <- training1[,!(names(training1) %in% nullsInTest)]
   ```
 
-Step 3. Removed 3 variables subjectively""
+Step 3. Removed 3 variables subjectively
 
   ```
   drops <- c("X","user_name","num_window")
   training3 <- training2[,!names(training2) %in% drops]
   ```
 
-At the end of pre-processing, my training dataset had 59 variables.
+At the end of pre-processing, my training dataset had 55 predictors.
 
 ## Training
 

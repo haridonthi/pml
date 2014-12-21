@@ -9,7 +9,7 @@ I pre-processed the data and applied the Random Forests method for my prediction
 
 ## Pre-Processing
 
-I applied 2 pre-processing steps.
+I applied 3 pre-processing steps.
 
 Step 1. Used the nearZeroVar function to retain only non-zero values:
 
@@ -39,34 +39,37 @@ At the end of pre-processing, my training dataset had 59 variables.
 
 I did a 2-fold cross-validation, 2-times using  ```method="repeatedcv"```.
 
-```
-> set.seed(825)
-> fitControl <- trainControl(method = "repeatedcv", number = 2, repeats = 2)
-> rfFit3 <- train(classe ~ ., data = training2, method = "rf", trControl = fitControl)
-> rfFit3
-Random Forest 
+  ```
+  > set.seed(825)
+  > 
+  > #rf - removed nullsInTest, 2-fold,2-times,
+  > fitControl <- trainControl(method = "repeatedcv", number = 2, repeats = 2)
+  > rfFit <- train(classe ~ ., data = training3, method = "rf", trControl = fitControl)
+  > rfFit
+  Random Forest 
+  
+  19622 samples
+     55 predictor
+      5 classes: 'A', 'B', 'C', 'D', 'E' 
+  
+  No pre-processing
+  Resampling: Cross-Validated (2 fold, repeated 2 times) 
+  
+  Summary of sample sizes: 9810, 9812, 9811, 9811 
+  
+  Resampling results across tuning parameters:
+  
+    mtry  Accuracy   Kappa      Accuracy SD   Kappa SD   
+     2    0.9871828  0.9837831  0.0010796399  0.001366566
+    37    0.9975028  0.9968414  0.0009434239  0.001193230
+    73    0.9967893  0.9959389  0.0009615179  0.001216269
+  
+  Accuracy was used to select the optimal model using  the largest value.
+  The final value used for the model was mtry = 37. 
+  ```
 
-19622 samples
-   58 predictor
-    5 classes: 'A', 'B', 'C', 'D', 'E' 
-
-No pre-processing
-Resampling: Cross-Validated (2 fold, repeated 2 times) 
-
-Summary of sample sizes: 9810, 9812, 9811, 9811 
-
-Resampling results across tuning parameters:
-
-  mtry  Accuracy   Kappa      Accuracy SD   Kappa SD    
-   2    0.9950820  0.9937792  0.0010832826  0.0013702370
-  41    0.9997197  0.9996455  0.0002806919  0.0003550220
-  80    0.9995413  0.9994199  0.0003169171  0.0004008397
-
-Accuracy was used to select the optimal model using  the largest value.
-The final value used for the model was mtry = 41. 
-```
-
-My model has .99 accuracy
+My model has .99 accuracy. The model was able to predict all the 20 tests correctly.
 
 ## Acknowledgments
-http://groupware.les.inf.puc-rio.br/har
+- http://groupware.les.inf.puc-rio.br/har
+- Coursera discussion forums - huge help!

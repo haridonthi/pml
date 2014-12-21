@@ -42,6 +42,16 @@ rfFit
 nzv <- nearZeroVar(training)
 testing1 <- testing[, -nzv]
 testing2 <- testing1[,!(names(testing1) %in% nullsInTest)]
-training3 <- training3[,!names(training3) %in% drops]
+testing3 <- testing2[,!names(testing2) %in% drops]
 pred <- predict(rfFit,testing3)
 pred
+
+#create files to submit
+answers = pred
+pml_write_files = function(x){
+  n = length(x)
+  for(i in 1:n){
+    filename = paste0("problem_id_",i,".txt")
+    write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)
+  }
+}
